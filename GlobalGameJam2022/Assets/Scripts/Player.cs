@@ -5,10 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float lightSpeed = 5, darkSpeed = 3;
+    [SerializeField] int[] xPos, yPos, size;
     float speed;
     Rigidbody2D rigibody;
     SpriteRenderer spriteRenderer;
-    bool changeForm = true;
+    Camera cam;
+    [HideInInspector]public bool changeForm = true;
     bool groundCheck = false;
     bool lookingLeft;
     void Awake()
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
+        cam = Camera.main;
         ChangeForm();
     }
     void Update()
@@ -74,5 +77,13 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Ground"))
             groundCheck = false;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("CamSetter")) {
+            int index = int.Parse(collision.gameObject.name);
+            cam.transform.position = new Vector3(xPos[index], yPos[index], cam.transform.position.z);
+            cam.orthographicSize = size[index];
+        }
     }
 }
