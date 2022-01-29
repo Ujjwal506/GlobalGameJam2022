@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     bool changeForm = true;
     bool groundCheck = false;
+    bool lookingLeft;
     void Awake()
     {
         rigibody = GetComponent<Rigidbody2D>();
@@ -28,14 +29,29 @@ public class Player : MonoBehaviour
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
         if (Input.GetKeyDown(KeyCode.W)) {
-            if(groundCheck)
-                rigibody.velocity = new Vector3(0, speed, 0);
+            if (groundCheck) {
+                if (!changeForm)
+                    rigibody.velocity = new Vector3(0, speed * 2, 0);
+                else { 
+                    if(lookingLeft)
+                        rigibody.velocity = new Vector3(-speed * 2, speed + 1, 0);
+                    else
+                        rigibody.velocity = new Vector3(speed * 2, speed + 1, 0);
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.Space)) {
             ChangeForm();
         }
+        if (Input.GetKeyDown(KeyCode.A)) {
+            lookingLeft = true;
+        }
+        if (Input.GetKeyDown(KeyCode.D)) {
+            lookingLeft = false;
+        }
     }
     void ChangeForm() {
+        groundCheck = true;
         changeForm = !changeForm;
         if (changeForm) { 
             spriteRenderer.color = Color.black;
@@ -49,7 +65,9 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag.Equals("Ground"))
-            groundCheck = true;
+        {
+            groundCheck = true; rigibody.velocity = Vector2.zero;
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
