@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
         if (Input.GetKeyDown(KeyCode.W)) {
+            groundCheck = false;
             if (groundCheck) {
                 if (!changeForm)
                     rigibody.velocity = new Vector3(0, speed * 2, 0);
