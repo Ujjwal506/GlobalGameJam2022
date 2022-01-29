@@ -28,8 +28,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) {
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
-        if (Input.GetKeyDown(KeyCode.W)) {
-            groundCheck = false;
+        if (Input.GetKeyDown(KeyCode.W)) {           
             if (groundCheck) {
                 if (!changeForm)
                     rigibody.velocity = new Vector3(0, speed * 2, 0);
@@ -40,6 +39,7 @@ public class Player : MonoBehaviour
                         rigibody.velocity = new Vector3(speed * 2, speed + 1, 0);
                 }
             }
+            groundCheck = false;
         }
         if (Input.GetKeyDown(KeyCode.Space)) {
             ChangeForm();
