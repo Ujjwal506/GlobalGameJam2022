@@ -40,13 +40,11 @@ public class BoardBox : MonoBehaviour
             {
                 GetComponent<SpriteRenderer>().sprite = p.white;
                 gameObject.tag = "White";
-                Manage.instance.CollectFX();
             }
             else
             {
                 GetComponent<SpriteRenderer>().sprite = p.black;
                 gameObject.tag = "Black";
-                Manage.instance.CollectFX();
             }
         }
     }
