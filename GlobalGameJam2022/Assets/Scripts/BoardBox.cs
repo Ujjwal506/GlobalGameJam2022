@@ -14,7 +14,7 @@ public class BoardBox : MonoBehaviour
             p.moveLeft = moveLeft;
             p.moveRight = moveRight;
 
-            if (p.blackPlayer) {
+            if (p.blackPlayer == true) {
                 GetComponent<SpriteRenderer>().sprite = p.black;
                 gameObject.tag = "Black";
                 Manage.instance.CollectFX();
