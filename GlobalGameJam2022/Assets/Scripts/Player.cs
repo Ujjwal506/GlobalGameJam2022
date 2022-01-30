@@ -4,13 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public bool moveUp, moveDown, moveLeft, moveRight;
+    [HideInInspector] public bool moveUp, moveDown, moveLeft, moveRight, blackPlayer;
     public Sprite white, black;
     Vector3 lastPos;
     PhotonView view;
     private void Start()
     {
-        WaitingRoom.playerNum = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         view = GetComponent<PhotonView>();
     }
     void Update()
@@ -20,26 +19,35 @@ public class Player : MonoBehaviour
             {
                 lastPos = transform.position;
                 if (moveUp)
+                {
                     transform.position = new Vector3(transform.position.x, transform.position.y + 12, transform.position.z);
+                    Manage.instance.MoveFX();
+                }
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
                 lastPos = transform.position;
-                if (moveDown)
+                if (moveDown) { 
                     transform.position = new Vector3(transform.position.x, transform.position.y - 12, transform.position.z);
-            }
+                    Manage.instance.MoveFX();
+                }
+        }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 lastPos = transform.position;
-                if (moveLeft)
+                if (moveLeft) { 
                     transform.position = new Vector3(transform.position.x - 12, transform.position.y, transform.position.z);
-            }
+                    Manage.instance.MoveFX();
+                }
+        }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 lastPos = transform.position;
-                if (moveRight)
+                if (moveRight) { 
                     transform.position = new Vector3(transform.position.x + 12, transform.position.y, transform.position.z);
-            }
+                    Manage.instance.MoveFX();
+                }
+        }
         }
     }
     
@@ -48,12 +56,26 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag.Equals(gameObject.tag))
         {
             transform.position = lastPos;
+            if (blackPlayer)
+            {
+                if (Manage.instance.whiteCount > Manage.instance.blackCount)
+                {
+                    Manage.instance.winWhite.SetActive(true);
+                }
+            }
+            else {
+                if (Manage.instance.whiteCount < Manage.instance.blackCount)
+                {
+                    Manage.instance.winBlack.SetActive(true);
+                }
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("White") || collision.gameObject.tag.Equals("Black")) {
             transform.position = collision.transform.position;
+            Manage.instance.Count();
         }
     }
 }

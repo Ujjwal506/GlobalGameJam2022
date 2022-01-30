@@ -549,6 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8bd9ec8617fff4b80356e6a7422bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  white: {fileID: 1932875528}
+  black: {fileID: 28944465}
+  wait: {fileID: 363077744}
 --- !u!4 &649422406
 Transform:
   m_ObjectHideFlags: 0

@@ -3693,6 +3693,14 @@ MonoBehaviour:
   - {fileID: 1926935525}
   - {fileID: 1327146413}
   - {fileID: 1750055827}
+  whiteCount: 0
+  blackCount: 0
+  black: {fileID: 2051595889}
+  white: {fileID: 688556016}
+  onMove: {fileID: 8300000, guid: ecca9c46b7a4c0449aa4612fa1ab09ea, type: 3}
+  onCollect: {fileID: 8300000, guid: 913b812535358f04c8b5a73395e43be9, type: 3}
+  winBlack: {fileID: 2058052355}
+  winWhite: {fileID: 160064017}
 --- !u!114 &914087944
 MonoBehaviour:
   m_ObjectHideFlags: 0

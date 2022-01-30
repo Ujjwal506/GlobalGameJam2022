@@ -17,10 +17,12 @@ public class BoardBox : MonoBehaviour
             if (collision.gameObject.GetComponent<SpriteRenderer>().color == Color.black) {
                 GetComponent<SpriteRenderer>().sprite = p.black;
                 gameObject.tag = "Black";
+                Manage.instance.CollectFX();
             }
             else { 
                 GetComponent<SpriteRenderer>().sprite = p.white;
                 gameObject.tag = "White";
+                Manage.instance.CollectFX();
             }
         }
     }
