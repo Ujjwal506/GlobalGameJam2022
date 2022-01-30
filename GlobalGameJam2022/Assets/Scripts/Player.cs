@@ -56,24 +56,30 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag.Equals(gameObject.tag))
         {
             transform.position = lastPos;
-            view.RPC("Won", RpcTarget.All);
+            if (blackPlayer)
+            {
+                view.RPC("WonWhite", RpcTarget.All);
+            }
+            else
+            {
+                view.RPC("WonBlack", RpcTarget.All);
+            }
+            
         }
     }
     [PunRPC]
-    void Won() {
-        if (blackPlayer)
+    void WonWhite() {
+        if (Manage.instance.whiteCount > Manage.instance.blackCount)
         {
-            if (Manage.instance.whiteCount > Manage.instance.blackCount)
-            {
-                Manage.instance.winWhite.SetActive(true);
-            }
+            Manage.instance.winWhite.SetActive(true);
         }
-        else
+    }
+    [PunRPC]
+    void WonBlack()
+    {
+        if (Manage.instance.whiteCount < Manage.instance.blackCount)
         {
-            if (Manage.instance.whiteCount < Manage.instance.blackCount)
-            {
-                Manage.instance.winBlack.SetActive(true);
-            }
+            Manage.instance.winBlack.SetActive(true);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
