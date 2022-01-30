@@ -19,7 +19,7 @@ public class BoardBox : MonoBehaviour
                 gameObject.tag = "White";
                 Manage.instance.CollectFX();
             }
-            else {
+            else if(p.blackPlayer) {
                 GetComponent<SpriteRenderer>().sprite = p.black;
                 gameObject.tag = "Black";
                 Manage.instance.CollectFX();
