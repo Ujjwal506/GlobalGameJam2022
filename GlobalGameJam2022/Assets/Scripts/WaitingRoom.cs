@@ -17,9 +17,8 @@ public class WaitingRoom : MonoBehaviour
         {
             black.SetActive(true);
         }
-        InvokeRepeating("WaitOver", 1, 0.1f);
     }
-    void WaitOver() {
+    void Update() {
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
             SceneManager.LoadScene(2);
     }
