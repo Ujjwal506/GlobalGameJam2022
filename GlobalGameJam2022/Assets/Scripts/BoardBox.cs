@@ -14,14 +14,14 @@ public class BoardBox : MonoBehaviour
             p.moveLeft = moveLeft;
             p.moveRight = moveRight;
 
-            if (collision.gameObject.GetComponent<SpriteRenderer>().sprite.name.Equals("BlackCircle")) {
-                GetComponent<SpriteRenderer>().sprite = p.black;
-                gameObject.tag = "Black";
-                Manage.instance.CollectFX();
-            }
-            else { 
+            if (!p.blackPlayer) {              
                 GetComponent<SpriteRenderer>().sprite = p.white;
                 gameObject.tag = "White";
+                Manage.instance.CollectFX();
+            }
+            else {
+                GetComponent<SpriteRenderer>().sprite = p.black;
+                gameObject.tag = "Black";
                 Manage.instance.CollectFX();
             }
         }
