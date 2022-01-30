@@ -12,14 +12,17 @@ public class Manage : MonoBehaviour
     AudioSource movefx, collectfx;
     public static Manage instance;
     public GameObject winBlack, winWhite;
-    private void Start()
+    private void Awake()
     {
+        instance = this;
         movefx = gameObject.AddComponent<AudioSource>();
         movefx.clip = onMove;
         movefx.playOnAwake = false;
+        movefx.loop = false;
         collectfx = gameObject.AddComponent<AudioSource>();
         collectfx.clip = onCollect;
         collectfx.playOnAwake = false;
+        collectfx.loop = false;
     }
     public void Count() {
         whiteCount = blackCount = 0;

@@ -6,17 +6,15 @@ using UnityEngine.SceneManagement;
 public class WaitingRoom : MonoBehaviour
 {
     public static int playerNum;
-    [SerializeField] GameObject white, black, wait;
+    [SerializeField] GameObject white, black;
     void Start()
     {
         playerNum = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         if (playerNum == 0) {
-            wait.SetActive(false);
             white.SetActive(true);
         }
         if (playerNum == 1)
         {
-            wait.SetActive(false);
             black.SetActive(true);
         }
     }
