@@ -8,10 +8,6 @@ public class SpawnPlayers : MonoBehaviour
     [SerializeField] GameObject[] playerCharacter;
     void Start()
     {
-        if (WaitingRoom.playerNum == 1)
-            PhotonNetwork.Instantiate(playerCharacter[WaitingRoom.playerNum].name, spawnPoints[WaitingRoom.playerNum].position, Quaternion.identity)
-                .GetComponent<Player>().blackPlayer = true;
-        else
-            PhotonNetwork.Instantiate(playerCharacter[WaitingRoom.playerNum].name, spawnPoints[WaitingRoom.playerNum].position, Quaternion.identity);
+        PhotonNetwork.Instantiate(playerCharacter[WaitingRoom.playerNum].name, spawnPoints[WaitingRoom.playerNum].position, Quaternion.identity);
     }
 }

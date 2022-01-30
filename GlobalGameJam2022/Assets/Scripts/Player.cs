@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         view = GetComponent<PhotonView>();
+        if (GetComponent<SpriteRenderer>().sprite.name.Equals("BlackCircle"))
+            blackPlayer = true;
     }
     void Update()
     {
