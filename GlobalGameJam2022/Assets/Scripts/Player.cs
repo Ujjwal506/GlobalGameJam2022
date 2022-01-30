@@ -56,18 +56,23 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag.Equals(gameObject.tag))
         {
             transform.position = lastPos;
-            if (blackPlayer)
+            view.RPC("Won", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    void Won() {
+        if (blackPlayer)
+        {
+            if (Manage.instance.whiteCount > Manage.instance.blackCount)
             {
-                if (Manage.instance.whiteCount > Manage.instance.blackCount)
-                {
-                    Manage.instance.winWhite.SetActive(true);
-                }
+                Manage.instance.winWhite.SetActive(true);
             }
-            else {
-                if (Manage.instance.whiteCount < Manage.instance.blackCount)
-                {
-                    Manage.instance.winBlack.SetActive(true);
-                }
+        }
+        else
+        {
+            if (Manage.instance.whiteCount < Manage.instance.blackCount)
+            {
+                Manage.instance.winBlack.SetActive(true);
             }
         }
     }

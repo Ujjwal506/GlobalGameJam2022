@@ -42,4 +42,7 @@ public class Manage : MonoBehaviour
     {
         collectfx.Play();
     }
+    public void ExitApp() {
+        Application.Quit();
+    }
 }
