@@ -13,7 +13,7 @@ public class OnConnected : MonoBehaviourPunCallbacks
         {
             IsOpen = true,
             IsVisible = true,
-            MaxPlayers = 4
+            MaxPlayers = 2
         };
         PhotonNetwork.CreateRoom(roomName, roomOpt);
     }

@@ -4,11 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 public class SpawnPlayers : MonoBehaviour
 {
-    public Transform[] spawnPoints;
-    public GameObject playerCharacter;
+    [SerializeField] Transform[] spawnPoints;
+    [SerializeField] GameObject[] playerCharacter;
     void Start()
     {
-        Vector3 spawnPos = spawnPoints[Random.Range(0, 1)].position;
-        PhotonNetwork.Instantiate(playerCharacter.name, spawnPos, Quaternion.identity);
+        Vector3 spawnPos = spawnPoints[WaitingRoom.playerNum].position;
+        PhotonNetwork.Instantiate(playerCharacter[WaitingRoom.playerNum - 1].name, spawnPos, Quaternion.identity);
     }
 }

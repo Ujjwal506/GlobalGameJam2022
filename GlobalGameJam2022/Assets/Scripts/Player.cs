@@ -1,89 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class Player : MonoBehaviour
 {
-    [SerializeField] float lightSpeed = 5, darkSpeed = 3;
-    [SerializeField] int[] xPos, yPos, size;
-    float speed;
-    Rigidbody2D rigibody;
-    SpriteRenderer spriteRenderer;
-    Camera cam;
-    [HideInInspector]public bool changeForm = true;
-    bool groundCheck = false;
-    bool lookingLeft;
-    void Awake()
-    {
-        rigibody = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+    [HideInInspector] public bool moveUp, moveDown, moveLeft, moveRight;
+    public Sprite white, black;
+    Vector3 lastPos;
+    PhotonView view;
     private void Start()
     {
-        cam = Camera.main;
-        ChangeForm();
+        WaitingRoom.playerNum = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        view = GetComponent<PhotonView>();
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.A)) {
-            transform.Translate(transform.right * -speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.D)) {
-            transform.Translate(transform.right * speed * Time.deltaTime);
-        }
-        if (Input.GetKeyDown(KeyCode.W)) {           
-            if (groundCheck) {
-                if (!changeForm)
-                    rigibody.velocity = new Vector3(0, speed * 2, 0);
-                else { 
-                    if(lookingLeft)
-                        rigibody.velocity = new Vector3(-speed * 2, speed + 1, 0);
-                    else
-                        rigibody.velocity = new Vector3(speed * 2, speed + 1, 0);
-                }
+        if (view.IsMine && PhotonNetwork.CurrentRoom.PlayerCount == 2) {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                lastPos = transform.position;
+                if (moveUp)
+                    transform.position = new Vector3(transform.position.x, transform.position.y + 12, transform.position.z);
             }
-            groundCheck = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            ChangeForm();
-        }
-        if (Input.GetKeyDown(KeyCode.A)) {
-            lookingLeft = true;
-        }
-        if (Input.GetKeyDown(KeyCode.D)) {
-            lookingLeft = false;
-        }
-    }
-    void ChangeForm() {
-        groundCheck = true;
-        changeForm = !changeForm;
-        if (changeForm) { 
-            spriteRenderer.color = Color.black;
-            speed = darkSpeed;
-        }
-        else { 
-            spriteRenderer.color = Color.white;
-            speed = lightSpeed;
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                lastPos = transform.position;
+                if (moveDown)
+                    transform.position = new Vector3(transform.position.x, transform.position.y - 12, transform.position.z);
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                lastPos = transform.position;
+                if (moveLeft)
+                    transform.position = new Vector3(transform.position.x - 12, transform.position.y, transform.position.z);
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                lastPos = transform.position;
+                if (moveRight)
+                    transform.position = new Vector3(transform.position.x + 12, transform.position.y, transform.position.z);
+            }
         }
     }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Ground"))
+        if (collision.gameObject.tag.Equals(gameObject.tag))
         {
-            groundCheck = true; rigibody.velocity = Vector2.zero;
+            transform.position = lastPos;
         }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag.Equals("Ground"))
-            groundCheck = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("CamSetter")) {
-            int index = int.Parse(collision.gameObject.name);
-            cam.transform.position = new Vector3(xPos[index], yPos[index], cam.transform.position.z);
-            cam.orthographicSize = size[index];
+        if (collision.gameObject.tag.Equals("White") || collision.gameObject.tag.Equals("Black")) {
+            transform.position = collision.transform.position;
         }
     }
 }

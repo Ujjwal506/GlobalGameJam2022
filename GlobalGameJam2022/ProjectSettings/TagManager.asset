@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - CamSetter
+  - Bullet
+  - White
+  - Black
   layers:
   - Default
   - TransparentFX
